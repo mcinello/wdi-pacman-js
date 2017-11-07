@@ -35,10 +35,8 @@ var clyde = {
   edible: 'false'
 };
 
-var ghosts = [inky, blinky, pinky, clyde]
-
 // replace this comment with your four ghosts setup as objects
-
+var ghosts = [inky, blinky, pinky, clyde]
 
 // Draw the screen functionality
 function drawScreen() {
@@ -80,6 +78,21 @@ function eatDot() {
   score += 10;
 }
 
+function eatGhost(ghost) {
+  if (ghost["edible"] === 'false') {
+    console.log("\n" + ghost["name"] + " the " + ghost["colour"] + " ghost took a life!");
+    lives -= 1;
+    if (lives < 0) {
+      return gameOver()
+    }
+    return lives
+  }
+}
+
+function gameOver() {
+  process.exit();
+}
+
 
 // Process Player's Input
 function processInput(key) {
@@ -87,6 +100,18 @@ function processInput(key) {
     case '\u0003': // This makes it so CTRL-C will quit the program
     case 'q':
       process.exit();
+      break;
+    case '1':
+      eatGhost(inky)
+      break;
+    case '2':
+      eatGhost(blinky)
+      break;
+    case '3':
+      eatGhost(pinky)
+      break;
+    case '4':
+      eatGhost(clyde)
       break;
     case 'd':
       eatDot();
