@@ -88,7 +88,8 @@ function eatPowerPellet() {
   console.log('\nChomp!');
   score += 50;
   for (i = 0; i < ghosts.length; i++) {
-    ghosts["edible"] = 'true';
+    var ghost = ghosts[i]
+    ghost["edible"] = 'true';
   }
   powerPellets -= 1;
 }
@@ -101,7 +102,12 @@ function eatGhost(ghost) {
       return gameOver()
     }
     return lives
+  } else if (ghost["edible"] === 'true') {
+    console.log("\nPacman can now eat " + ghost["colour"] + " ghost " + ghost["name"] + "!");
+    score += 200
+    ghost["edible"] = 'false';
   }
+
 }
 
 function gameOver() {
