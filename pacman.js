@@ -10,14 +10,14 @@ var inky = {
   name: 'Inky',
   colour: 'Red',
   character: 'Shadow',
-  edible: 'false'
+  edible: false
 };
 var blinky = {
   menu_option: '2',
   name: 'Blinky',
   colour: 'Cyan',
   character: 'Speedy',
-  edible: 'false'
+  edible: false
 };
 
 var pinky = {
@@ -25,7 +25,7 @@ var pinky = {
   name: 'Pinky',
   colour: 'Pink',
   character: 'Bashful',
-  edible: 'false'
+  edible: false
 };
 
 var clyde = {
@@ -33,7 +33,7 @@ var clyde = {
   name: 'Clyde',
   colour: 'Orange',
   character: 'Pokey',
-  edible: 'false'
+  edible: false
 };
 
 // replace this comment with your four ghosts setup as objects
@@ -65,10 +65,10 @@ function displayMenu() {
   if (powerPellets > 0) {
     console.log('(p) Eat Power-Pellet');
   }
-  console.log('(1) Eat Inky');
-  console.log('(2) Eat Blinky');
-  console.log('(3) Eat Pinky');
-  console.log('(4) Eat Clyde');
+  console.log('(1) Eat Inky', inky.edible ? "(edible)" : "(inedible)");
+  console.log('(2) Eat Blinky', blinky.edible ? "(edible)" : "(inedible)");
+  console.log('(3) Eat Pinky', pinky.edible ? "(edible)" : "(inedible)");
+  console.log('(4) Eat Clyde', clyde.edible ? "(edible)" : "(inedible)");
   console.log('(q) Quit');
 }
 
@@ -89,23 +89,23 @@ function eatPowerPellet() {
   score += 50;
   for (i = 0; i < ghosts.length; i++) {
     var ghost = ghosts[i]
-    ghost["edible"] = 'true';
+    ghost["edible"] = true;
   }
   powerPellets -= 1;
 }
 
 function eatGhost(ghost) {
-  if (ghost["edible"] === 'false') {
+  if (ghost["edible"] === false) {
     console.log("\n" + ghost["name"] + " the " + ghost["colour"] + " ghost took a life!");
     lives -= 1;
     if (lives < 0) {
       return gameOver()
     }
     return lives
-  } else if (ghost["edible"] === 'true') {
+  } else if (ghost["edible"] === true) {
     console.log("\nPacman can now eat " + ghost["colour"] + " ghost " + ghost["name"] + "!");
     score += 200
-    ghost["edible"] = 'false';
+    ghost["edible"] = false;
   }
 
 }
