@@ -156,7 +156,7 @@ function eatGhost(ghost) {
     lives -= 1;
     if (lives < 0)
     {
-      return gameOver()
+      return process.exit();
     }
     return lives
   }
@@ -216,12 +216,6 @@ function eatFruit(fruit)
   else if (fruit === "key")
     { score += 5000; }
 }
-
-
-function gameOver() {
-  process.exit();
-}
-
 
 // Process Player's Input
 function processInput(key) {
