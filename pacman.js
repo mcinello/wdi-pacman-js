@@ -3,6 +3,7 @@ var score = 0;
 var lives = 2;
 var powerPellets = 4;
 var dots = 240;
+var ghostsEaten = 0;
 
 
 // Define your ghosts here
@@ -58,6 +59,7 @@ function displayStats() {
   console.log('Score: ' + score + '     Lives: ' + lives);
   console.log("\n");
   console.log('Power-Pellets: ' + powerPellets + '    Dots: ' + dots);
+   console.log('Ghosts Eaten: ' + ghostsEaten);
 }
 
 function displayMenu() {
@@ -134,11 +136,23 @@ function eatGhost(ghost) {
     }
     return lives
   } else if (ghost["edible"] === true) {
-    console.log("\nPacman can now eat " + ghost["colour"] + " ghost " + ghost["name"] + "!");
-    score += 200
-    ghost["edible"] = false;
+      console.log("\nPacman can now eat " + ghost["colour"] + " ghost " + ghost["name"] + "!");
+      ghostsEaten += 1;
+      checkGhostsEaten();
+      ghost["edible"] = false;
   }
 
+  function checkGhostsEaten() {}
+  if (ghostsEaten === 1) {
+    score += 200;
+  } else if (ghostsEaten === 2) {
+    score += 400;
+  } else if (ghostsEaten === 3) {
+    score += 800;
+  } else if (ghostsEaten === 4) {
+    score += 1600;
+    ghostsEaten = 0;
+  }
 }
 
 function gameOver() {
