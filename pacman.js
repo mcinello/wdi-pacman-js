@@ -4,7 +4,7 @@ var lives = 2;
 var powerPellets = 4;
 var dots = 240;
 var ghostsEaten = 0;
-var level = 0;
+var level = 1;
 
 // Define your ghosts here
 var inky = {
@@ -62,26 +62,38 @@ function displayStats() {
   console.log('Score: ' + score + '     Lives: ' + lives);
   console.log("\n");
   console.log('Power-Pellets: ' + powerPellets + '    Dots: ' + dots);
-   console.log('Ghosts Eaten: ' + ghostsEaten);
+  console.log('Ghosts Eaten: ' + ghostsEaten);
 }
 
 function displayMenu() {
   console.log('\n\nSelect Option:\n');  // each \n creates a new line
-  if (dots >= 10) {
-    console.log('(t) Eat 10 Dots');
-  }
-  if (dots >= 100) {
-    console.log('(o) Eat 100 Dots');
-  }
-  console.log('(r) Eat Remaining Dots');
+  
+  // DOTS & PELLET
   console.log('(d) Eat Dot');
-  if (powerPellets > 0) {
-    console.log('(p) Eat Power-Pellet');
-  }
+  if (dots >= 10)
+    { console.log('(t) Eat 10 Dots'); }
+  if (dots >= 100)
+    { console.log('(o) Eat 100 Dots'); }
+  console.log('(r) Eat Remaining Dots');
+  if (powerPellets > 0)
+    { console.log('(p) Eat Power-Pellet'); }
+
+  // GHOSTS
   console.log('(1) Eat Inky', inky.edible ? "(edible)" : "(inedible)");
   console.log('(2) Eat Blinky', blinky.edible ? "(edible)" : "(inedible)");
   console.log('(3) Eat Pinky', pinky.edible ? "(edible)" : "(inedible)");
   console.log('(4) Eat Clyde', clyde.edible ? "(edible)" : "(inedible)");
+
+  // FRUITS
+  if (level === 1) console.log('(c) Cherry');
+  if (level === 2) console.log('(s) Strawberry');
+  if (level === 3 || level === 4) console.log('(g) Orange');
+  if (level === 5 || level === 6) console.log('(a) Apple');
+  if (level === 7 || level === 8) console.log('(n) Pineapple');
+  if (level === 9 || level === 10) console.log('(h) Galaxian Spaceship');
+  if (level === 11 || level === 12) console.log('(b) Bell');
+  if (level >= 13) console.log('(k) Key');
+
   console.log('(q) Quit');
 }
 
@@ -177,7 +189,32 @@ function IsCountZero() {
     { level += 1;
       dots = 240;
       powerPellets = 4;
+      for (var i = 0; i < ghosts.length; i++)
+        {
+          var ghost = ghosts[i];
+          ghost["edible"] = false;
+        }
     }
+}
+
+function eatFruit(fruit)
+{
+  if (fruit === "cherry")
+    { score += 100; }
+  else if (fruit === "strawberry")
+    { score += 300; }
+  else if (fruit === "orange")
+    { score += 500; }
+  else if (fruit === "apple")
+    { score += 700; }
+  else if (fruit === "pineapple")
+    { score += 1000; }
+  else if (fruit === "galaxian spaceship")
+    { score += 2000; }
+  else if (fruit === "bell")
+    { score += 3000; }
+  else if (fruit === "key")
+    { score += 5000; }
 }
 
 
@@ -192,6 +229,30 @@ function processInput(key) {
     case '\u0003': // This makes it so CTRL-C will quit the program
     case 'q':
       process.exit();
+      break;
+    case 'c':
+      eatFruit("cherry");
+      break;
+    case 's':
+      eatFruit("strawberry");
+      break;
+    case 'g':
+      eatFruit("orange");
+      break;
+    case 'a':
+      eatFruit("apple");
+      break;
+    case 'n':
+      eatFruit("pineapple");
+      break;
+    case 'h':
+      eatFruit("galaxian spaceship");
+      break;
+    case 'b':
+      eatFruit("bell");
+      break;
+    case 'k':
+      eatFruit("key");
       break;
     case '1':
       eatGhost(inky)
