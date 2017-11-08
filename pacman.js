@@ -140,11 +140,10 @@ function eatOneHunDots() {
 function eatPowerPellet() {
   chomp();
   score += 50;
-  for (i = 0; i < ghosts.length; i++)
+  ghosts.forEach(function (ghost)
   {
-    var ghost = ghosts[i]
-    ghost["edible"] = true;
-  }
+    ghost.edible = true;
+  })
   powerPellets -= 1;
   IsCountZero()
 }
@@ -189,12 +188,11 @@ function IsCountZero() {
     { level += 1;
       dots = 240;
       powerPellets = 4;
-      for (var i = 0; i < ghosts.length; i++)
-        {
-          var ghost = ghosts[i];
-          ghost["edible"] = false;
-        }
-    }
+    ghosts.forEach(function (ghost)
+    {
+      ghost.edible = false;
+    })
+      }
 }
 
 function eatFruit(fruit)
