@@ -4,7 +4,7 @@ var lives = 2;
 var powerPellets = 4;
 var dots = 240;
 var ghostsEaten = 0;
-
+var level = 0;
 
 // Define your ghosts here
 var inky = {
@@ -14,6 +14,7 @@ var inky = {
   character: 'Shadow',
   edible: false
 };
+
 var blinky = {
   menu_option: '2',
   name: 'Blinky',
@@ -56,6 +57,8 @@ function clearScreen() {
 }
 
 function displayStats() {
+  console.log('LEVEL: ' + level);
+  console.log('\n');
   console.log('Score: ' + score + '     Lives: ' + lives);
   console.log("\n");
   console.log('Power-Pellets: ' + powerPellets + '    Dots: ' + dots);
@@ -89,71 +92,94 @@ function displayPrompt() {
 
 
 // Menu Options
+
 function chomp() {
   console.log('\nChomp!');
 }
 
 function eatDot() {
   chomp();
-  score += 10;
+  score += 5;
   dots -= 1;
+  IsCountZero();
 }
 
 function eatRemainingDots() {
   chomp();
   score += dots;
   dots -= dots;
+  IsCountZero();
 }
 
 function eatTenDots() {
   chomp();
-  score += 25;
+  score += 20;
   dots -= 10;
+  IsCountZero();
 }
 
 function eatOneHunDots() {
   chomp();
   score += 100;
   dots -= 100;
+  IsCountZero();
 }
 
 function eatPowerPellet() {
   chomp();
   score += 50;
-  for (i = 0; i < ghosts.length; i++) {
+  for (i = 0; i < ghosts.length; i++)
+  {
     var ghost = ghosts[i]
     ghost["edible"] = true;
   }
   powerPellets -= 1;
+  IsCountZero()
 }
 
 function eatGhost(ghost) {
-  if (ghost["edible"] === false) {
+  if (ghost["edible"] === false)
+  {
     console.log("\n" + ghost["name"] + " the " + ghost["colour"] + " ghost took a life!");
     lives -= 1;
-    if (lives < 0) {
+    if (lives < 0)
+    {
       return gameOver()
     }
     return lives
-  } else if (ghost["edible"] === true) {
+  }
+  else if (ghost["edible"] === true)
+  {
       console.log("\nPacman can now eat " + ghost["colour"] + " ghost " + ghost["name"] + "!");
       ghostsEaten += 1;
       checkGhostsEaten();
       ghost["edible"] = false;
   }
-
-  function checkGhostsEaten() {}
-  if (ghostsEaten === 1) {
-    score += 200;
-  } else if (ghostsEaten === 2) {
-    score += 400;
-  } else if (ghostsEaten === 3) {
-    score += 800;
-  } else if (ghostsEaten === 4) {
-    score += 1600;
-    ghostsEaten = 0;
-  }
 }
+
+  function checkGhostsEaten() {
+    if (ghostsEaten === 1)
+      { score += 200; }
+    else if (ghostsEaten === 2)
+      { score += 400; }
+    else if (ghostsEaten === 3)
+    { score += 800; }
+    else if (ghostsEaten === 4)
+    {
+      score += 1600;
+      ghostsEaten = 0;
+    }
+  }
+
+
+function IsCountZero() {
+  if (dots === 0 && powerPellets === 0)
+    { level += 1;
+      dots = 240;
+      powerPellets = 4;
+    }
+}
+
 
 function gameOver() {
   process.exit();
