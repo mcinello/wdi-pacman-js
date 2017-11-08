@@ -68,7 +68,8 @@ function displayMenu() {
   if (dots >= 100) {
     console.log('(o) Eat 100 Dots');
   }
-  console.log('(d) Eat Remaining Dots');
+  console.log('(r) Eat Remaining Dots');
+  console.log('(d) Eat Dot');
   if (powerPellets > 0) {
     console.log('(p) Eat Power-Pellet');
   }
@@ -90,6 +91,12 @@ function chomp() {
   console.log('\nChomp!');
 }
 
+function eatDot() {
+  chomp();
+  score += 10;
+  dots -= 1;
+}
+
 function eatRemainingDots() {
   chomp();
   score += dots;
@@ -98,7 +105,7 @@ function eatRemainingDots() {
 
 function eatTenDots() {
   chomp();
-  score += 10;
+  score += 25;
   dots -= 10;
 }
 
@@ -167,8 +174,11 @@ function processInput(key) {
     case 'o':
       eatOneHunDots();
       break;
-    case 'd':
+    case 'r':
       eatRemainingDots();
+      break;
+    case 'd':
+      eatDot();
       break;
     default:
       console.log('\nInvalid Command!');
